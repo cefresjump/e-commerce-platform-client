@@ -1,10 +1,12 @@
 <script setup>
+import tradeCenter from "./views/merchant/trade-center.vue";
 
 </script>
 
 <template>
   <div>
-    hello
+    <tradeCenter></tradeCenter>
+  
   </div>
 </template>
 
