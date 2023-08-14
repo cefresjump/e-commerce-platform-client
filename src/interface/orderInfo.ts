@@ -1,9 +1,9 @@
 import { goodsInfo } from './goodsInfo'
 
 export interface orderInfo {
-  orderId: number,
-  userId: number,
-  merchantId: number,
+  orderId: number
+  userId: number
+  merchantId: number
   good: goodsInfo
   orderStage: orderStatus
 }

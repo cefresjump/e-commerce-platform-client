@@ -1,9 +1,9 @@
 import { orderInfo } from './orderInfo'
 
 export interface requetInfo {
-  requestId:number,
-  order: orderInfo,
-  requestType: requestType,
+  requestId: number
+  order: orderInfo
+  requestType: requestType
   stage: requestStage
 }
 
