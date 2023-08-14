@@ -1,14 +1,7 @@
-<script setup>
-import tradeCenter from "./views/merchant/trade-center.vue";
-
-</script>
+<script setup></script>
 
 <template>
-  <div>
-    <tradeCenter></tradeCenter>
-  
-  </div>
+  <div>hello</div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
