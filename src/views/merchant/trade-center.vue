@@ -1,6 +1,5 @@
-
 <template>
-    <el-container class="layout-container-demo" style="height: 500px">
+  <el-container class="layout-container-demo" style="height: 500px">
     <!-- header容器 -->
     <el-header
       style="
@@ -21,56 +20,48 @@
       <!-- 侧边容器 -->
       <el-aside width="200px">
         <el-scrollbar>
-       
-              <h5 class="mb-2" style="font-size: larger">
+          <h5 class="mb-2" style="font-size: larger">
+            <el-icon> <Avatar /> </el-icon>你的信息
+          </h5>
+          <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+          >
+            <el-menu-item index="/1">
+              <template #title>
+                <span
+                  ><el-icon> <Goods /> </el-icon>商品管理</span
+                >
+              </template>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <el-icon>
+                <DocumentCopy />
+              </el-icon>
+              <span>订单管理</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <el-icon>
+                <Headset />
+              </el-icon>
+              <span>售后处理</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+              <el-icon>
                 <el-icon>
-                  <Avatar /> </el-icon
-                >你的信息
-              </h5>
-              <el-menu
-                default-active="2"
-                class="el-menu-vertical-demo"
-                @open="handleOpen"
-                @close="handleClose"
-              >
-                <el-menu-item index="/1">
-                  <template #title>
-                    <span
-                      ><el-icon>
-                        <Goods /> </el-icon
-                      >商品管理</span
-                    >
-                  </template>
-                </el-menu-item>
-                <el-menu-item index="2">
-                  <el-icon>
-                    <DocumentCopy />
-                  </el-icon>
-                  <span>订单管理</span>
-                </el-menu-item>
-                <el-menu-item index="3">
-                  <el-icon>
-                    <Headset />
-                  </el-icon>
-                  <span>售后处理</span>
-                </el-menu-item>
-                <el-menu-item index="4">
-                  <el-icon>
-                    <el-icon>
-                      <Postcard />
-                    </el-icon>
-                  </el-icon>
-                  <span>商家信息</span>
-                </el-menu-item>
-              </el-menu>
-        
+                  <Postcard />
+                </el-icon>
+              </el-icon>
+              <span>商家信息</span>
+            </el-menu-item>
+          </el-menu>
         </el-scrollbar>
       </el-aside>
-<!-- main容器 -->
-      <el-main class="elMain"> 
-        <router-view >
-          
-        </router-view>
+      <!-- main容器 -->
+      <el-main class="elMain">
+        <router-view> </router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -79,7 +70,6 @@
 <script lang="ts" setup>
 import {
   ElMain,
-
   ElMenu,
   ElMenuItem,
   ElContainer,
