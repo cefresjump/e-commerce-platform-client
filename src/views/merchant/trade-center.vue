@@ -1,5 +1,7 @@
+
 <template>
-  <el-container class="layout-container-demo" style="height: 500px">
+    <el-container class="layout-container-demo" style="height: 500px">
+    <!-- header容器 -->
     <el-header
       style="
         text-align: right;
@@ -16,10 +18,10 @@
       </div>
     </el-header>
     <el-container>
+      <!-- 侧边容器 -->
       <el-aside width="200px">
         <el-scrollbar>
-          <el-row class="tac">
-            <el-col :span="12">
+       
               <h5 class="mb-2" style="font-size: larger">
                 <el-icon>
                   <Avatar /> </el-icon
@@ -61,12 +63,15 @@
                   <span>商家信息</span>
                 </el-menu-item>
               </el-menu>
-            </el-col>
-          </el-row>
+        
         </el-scrollbar>
       </el-aside>
-
-      <el-main> </el-main>
+<!-- main容器 -->
+      <el-main class="elMain"> 
+        <router-view >
+          
+        </router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
