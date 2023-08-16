@@ -1,6 +1,6 @@
 export interface commentInfo {
   userName: string
-  rank: number
+  userFigure: string
+  score: number
   content: string
-  date: Date
 }
