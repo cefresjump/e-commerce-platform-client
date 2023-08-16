@@ -13,6 +13,7 @@
         <el-table :data="filterTableData" style="width: 100%">
  
     <el-table-column label="商品id" prop="id" />
+    <el-table-column label="创建日期" prop="createDate" />
 
     <el-table-column label="商品图片" prop="figure" >
       <template #default="scope1">
@@ -87,7 +88,7 @@ import {
 } from 'element-plus'
 const search = ref('')
 
-import { goodsInfo } from '../../interface/goodsInfo.ts';
+import { goodsInfo } from '../../interface/goods.ts';
 // 默认图片预载
 const url =
   'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'
@@ -130,14 +131,16 @@ var tableData: goodsInfo[] = [
     type: "null",
   price: 999,
   description: "难吃",
-  figure: "图片url"
+  figure: "图片url",
+  createDate:new Date()
   }, { 
     name: 'Tom',
     id: 1,
     type: "null",
   price: 999,
   description: "难吃",
-  figure: "图片url"
+  figure: "图片url",
+  createDate:new Date()
   },
   { 
     name: 'Tom',
@@ -145,7 +148,8 @@ var tableData: goodsInfo[] = [
     type: "null",
   price: 999,
   description: "难吃",
-  figure: "图片url"
+  figure: "图片url",
+  createDate:new Date()
   },
 ]
 
