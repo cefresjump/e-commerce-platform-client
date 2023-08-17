@@ -14,23 +14,19 @@ enum requestStage {
   'ACCEPTED'
 }
 
-export const addAfterSale = async (msg: {
-  orderId: number
-  type: requestType
-}): Promise<boolean> => {
+export const addAfterSale = async (orderId: number, type: requestType): Promise<boolean> => {
+  const msg = { orderId, type }
   try {
     const response = (await requestApi.addAfterSale(msg)).data as commonResponse
     return response.isOk
   } catch (err) {
-    console.log(err)
     return false
   }
 }
 
 //id指的是用户id
-export const getSellerAfterSaleRequest = async (msg: {
-  id: number
-}): Promise<Object | undefined> => {
+export const getSellerAfterSaleRequest = async (id: number): Promise<Object | undefined> => {
+  const msg = { id }
   try {
     const response = (await requestApi.getSellerAfterSaleRequest(msg)).data as getterResponse
     if (response.isOk) {
@@ -44,15 +40,13 @@ export const getSellerAfterSaleRequest = async (msg: {
       }[]
     } else return undefined
   } catch (err) {
-    console.log(err)
     return undefined
   }
 }
 
 //id指的是商家id
-export const getBuyerAfterSaleRequest = async (msg: {
-  id: number
-}): Promise<Object | undefined> => {
+export const getBuyerAfterSaleRequest = async (id: number): Promise<Object | undefined> => {
+  const msg = { id }
   try {
     const response = (await requestApi.getBuyerAfterSaleRequest(msg)).data as getterResponse
     if (response.isOk) {
@@ -66,20 +60,16 @@ export const getBuyerAfterSaleRequest = async (msg: {
       }[]
     } else return undefined
   } catch (err) {
-    console.log(err)
     return undefined
   }
 }
 
-export const updateAfterSaleRequest = async (msg: {
-  id: number
-  stage: requestStage
-}): Promise<boolean> => {
+export const updateAfterSaleRequest = async (id: number, stage: requestStage): Promise<boolean> => {
+  const msg = { id, stage }
   try {
     const response = (await requestApi.updateAfterSaleRequest(msg)).data as commonResponse
     return response.isOk
   } catch (err) {
-    console.log(err)
     return false
   }
 }
