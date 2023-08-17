@@ -1,16 +1,11 @@
 <script setup>
-import { userApi } from '../lib/axiosApi.ts'
+import userApi from '../../lib/userApi'
+
 const handleClick = async () => {
-  try {
-    const response = await userApi.login({ name: 'user1', password: '12346' })
-    if (response.data.isOk) {
-      console.log('User logged in successfully')
-    } else {
-      console.log('Login failed')
-    }
-  } catch (error) {
-    console.error('Error:', error)
-  }
+  const result = await userApi.login('user1', '12356');
+  const info = await userApi.getInfo("user1");
+  console.log(result)
+  console.log(info);
 }
 </script>
 

@@ -1,45 +1,53 @@
 import { commonResponse, getterResponse } from '../interface/responseType.ts'
 import { userApi } from './axiosApi.ts'
 
-export const login = async (msg: { name: string; password: string }): Promise<boolean> => {
+export const login = async (name: string, password: string): Promise<boolean> => {
   try {
+    const msg = {
+      name,
+      password
+    }
     const response = (await userApi.login(msg)).data as commonResponse
     return response.isOk
   } catch (err) {
-    console.log(err)
     return false
   }
 }
 
-export const register = async (msg: {
-  name: string
-  password: string
-  email: string
-}): Promise<boolean> => {
+export const register = async (name: string, password: string, email: string): Promise<boolean> => {
+  const msg = {
+    name,
+    password,
+    email
+  }
   try {
     const response = (await userApi.register(msg)).data as commonResponse
     return response.isOk
   } catch (err) {
-    console.log(err)
     return false
   }
 }
 
-export const updatePassword = async (msg: {
-  name: string
-  oldPassword: string
+export const updatePassword = async (
+  name: string,
+  oldPassword: string,
   newPassword: string
-}): Promise<boolean> => {
+): Promise<boolean> => {
+  const msg = {
+    name,
+    oldPassword,
+    newPassword
+  }
   try {
     const response = (await userApi.updatePassword(msg)).data as commonResponse
     return response.isOk
   } catch (err) {
-    console.log(err)
     return false
   }
 }
 
-export const getInfo = async (msg: { name: string }): Promise<Object | undefined> => {
+export const getInfo = async (name: string): Promise<Object | undefined> => {
+  const msg = { name }
   try {
     const response = (await userApi.getInfo(msg)).data as getterResponse
     if (response.isOk) {
@@ -53,34 +61,26 @@ export const getInfo = async (msg: { name: string }): Promise<Object | undefined
       }
     } else return undefined
   } catch (err) {
-    console.log(err)
     return undefined
   }
 }
 
-export const updateInfo = async (msg: {
-  id: number
-  email: string
-  bio: string
-}): Promise<boolean> => {
+export const updateInfo = async (id: number, email: string, bio: string): Promise<boolean> => {
+  const msg = { id, email, bio }
   try {
     const response = (await userApi.updateInfo(msg)).data as commonResponse
     return response.isOk
   } catch (err) {
-    console.log(err)
     return false
   }
 }
 
-export const updateFigure = async (msg: {
-  id: string | Blob
-  figure: string | Blob
-}): Promise<boolean> => {
+export const updateFigure = async (id: string | Blob, figure: string | Blob): Promise<boolean> => {
+  const msg = { id, figure }
   try {
     const response = (await userApi.updateFigure(msg)).data as commonResponse
     return response.isOk
   } catch (err) {
-    console.log(err)
     return false
   }
 }
@@ -101,7 +101,6 @@ export const getGoodsList = async (): Promise<Object | undefined> => {
       }[]
     } else return undefined
   } catch (err) {
-    console.log(err)
     return undefined
   }
 }
