@@ -1,8 +1,15 @@
 export default [
   { path: '/', component: () => import('../views/shop/home-page.vue') },
-  { path: '/goods/:id', component: () => import('../views/shop/item-info.vue') },
-  { path: '/login', component: () => import('../views/login/user-login.vue') },
-  { path: '/register', component: () => import('../views/login/user-register.vue') },
+  {
+    path: '/account',
+    children: [
+      { path: 'userLogin', component: () => import('../views/login/user-login.vue') },
+      { path: 'userRegister', component: () => import('../views/login/user-register.vue') },
+      { path: 'merchantLogin', component: () => import('../views/login/merchant-login.vue') },
+      { path: 'merchantRegister', component: () => import('../views/login/merchant-register.vue') },
+    ]
+  },
+  { path: '/items/:id', component: () => import('../views/shop/item-info.vue') },
   {
     path: '/user',
     component: () => import('../views/user/user-center.vue'),
@@ -29,7 +36,7 @@ export default [
     component: () => import('../views/merchant/trade-center.vue'),
     children: [
       { path: 'info', component: () => import('../views/user/order-list.vue') },
-      { path: 'goods', component: () => import('../views/merchant/goods-info-edit.vue') },
+      { path: 'goods', component: () => import('../views/merchant/goods-list.vue') },
       { path: 'order', component: () => import('../views/merchant/order-list.vue') },
       {
         path: 'service',

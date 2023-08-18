@@ -1,10 +1,9 @@
 <template>
-  <el-container class="layout-goods" style="height: 500px"
-    ><el-header>
+  <el-container class="layout-goods" style="height: 500px"><el-header>
       <div class="goodsHead" style="font-size: 30px; font-family: 微软雅黑; text-align: center">
-        <span
-          ><el-icon><message /></el-icon>商品信息</span
-        >
+        <span><el-icon>
+            <message />
+          </el-icon>商品信息</span>
       </div>
     </el-header>
     <el-container>
@@ -16,14 +15,8 @@
           <el-table-column label="商品图片" prop="figure">
             <template #default="scope1">
               <div style="display: flex; align-items: center">
-                <el-image
-                  style="width: 100px; height: 100px"
-                  :src="url"
-                  fit="fill"
-                  :lazy="true"
-                  :zoom-rate="1.3"
-                  :preview-src-list="srcList"
-                >
+                <el-image style="width: 100px; height: 100px" :src="figure" fit="fill" :lazy="true" :zoom-rate="1.3"
+                  :preview-src-list="srcList">
                 </el-image>
               </div>
             </template>
@@ -42,9 +35,7 @@
               <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 
               <!-- 删除编写 -->
-              <el-button size="small" type="danger" @click="handleDelete(scope.$index)"
-                >删除</el-button
-              >
+              <el-button size="small" type="danger" @click="handleDelete(scope.$index)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -55,7 +46,7 @@
   </el-container>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed, ref } from 'vue'
 import {
   ElMain,
@@ -70,7 +61,6 @@ import {
 } from 'element-plus'
 const search = ref('')
 
-import { goodsInfo } from '../../interface/goods.ts'
 // 默认图片预载
 const url = 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'
 // 如果可以,可以选择查看不同图片
@@ -91,23 +81,23 @@ const filterTableData = computed(() =>
     // goodsInfo.type.toLowerCase().match(search.value.toLowerCase())
   )
 )
-const handleEdit = (index: number, row: goodsInfo) => {
+const handleEdit = (index, row) => {
   console.log(index, row)
 }
 
-const handleDelete = (index: number) => {
+const handleDelete = (index) => {
   //删除数据  filterTableData.value.splice(index,1)
 }
 
 //初始数据
-var tableData: goodsInfo[] = [
+var tableData = [
   {
     name: 'Tom',
     id: 1,
     type: 'null',
     price: 999,
     description: '难吃',
-    figure: '图片url',
+    figure: 'http://localhost:30000/static/user_figure1.webp',
     createDate: new Date()
   },
   {
@@ -145,12 +135,13 @@ const onAddItem = () => {
 <style scoped>
 .layout-goods .el-header {
   position: relative;
-  background-color: var(--el-color-primary-light-7);
   color: var(--el-text-color-primary);
 }
+
 .layout-goods .el-menu {
   border-right: none;
 }
+
 .layout-goods .el-main {
   padding: 0;
 }
