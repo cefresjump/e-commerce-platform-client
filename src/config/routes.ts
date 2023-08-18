@@ -14,7 +14,7 @@ export default [
     path: '/user',
     component: () => import('../views/user/user-center.vue'),
     children: [
-      { path: 'info', component: () => import('../views/user/order-list.vue') },
+      { path: 'info', component: () => import('../views/user/user-info.vue') },
       { path: 'order', component: () => import('../views/user/order-list.vue') },
       {
         path: 'orderNeedConfirm',
@@ -35,7 +35,7 @@ export default [
     path: '/merchant',
     component: () => import('../views/merchant/trade-center.vue'),
     children: [
-      { path: 'info', component: () => import('../views/user/order-list.vue') },
+      { path: 'info', component: () => import('../views/merchant/merchant-info.vue') },
       { path: 'goods', component: () => import('../views/merchant/goods-list.vue') },
       { path: 'order', component: () => import('../views/merchant/order-list.vue') },
       {

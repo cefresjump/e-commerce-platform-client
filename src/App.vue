@@ -4,7 +4,7 @@ import cefresMenuItem from './components/cefres-menu-item.vue';
 import { userAuthStore } from './store/userAccount';
 
 const handleExitAccount = ()=>{
-
+  userAuthStore().logout();
 }
 
 </script>
@@ -20,7 +20,7 @@ const handleExitAccount = ()=>{
         <cefresMenuItem index="/">首页</cefresMenuItem>
         <div style="flex-grow:1"></div>
         <div style="display: flex;" v-if="userAuthStore().isLoggedIn">
-          <div style="padding: 0 10px 0 0;">你好，用户{{ }}</div>
+          <div style="padding: 0 10px 0 0;">你好，用户{{ userAuthStore().userName }}</div>
           <div class="exitButton" @click="handleExitAccount">登出</div>
           <cefresMenuItem index="/user/info">用户中心</cefresMenuItem>
           <cefresMenuItem index="/user/order">我的订单</cefresMenuItem>
