@@ -18,8 +18,7 @@
       <!-- 侧边容器 -->
       <el-aside width="200px">
         <el-scrollbar>
-          <el-menu default-active="/merchant/info" router class="el-menu-vertical-demo" @open="handleOpen"
-            @close="handleClose">
+          <el-menu default-active="/merchant/info" router class="el-menu-vertical-demo">
             <el-menu-item index="/merchant/info">
               <template #title>
                 <span><el-icon>
@@ -68,13 +67,6 @@ import {
   ElHeader,
   ElIcon
 } from 'element-plus'
-
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
 </script>
 
 <style scoped>

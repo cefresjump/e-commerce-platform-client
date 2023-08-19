@@ -1,27 +1,28 @@
 import { commonResponse, getterResponse } from '../interface/responseType.ts'
 import { userApi } from './axiosApi.ts'
 
-export const login = async (name: string, password: string): Promise<boolean> => {
+export const login = async (name: string, password: string): Promise<Object | undefined> => {
+  const body = { name, password }
   try {
-    const msg = {
-      name,
-      password
-    }
-    const response = (await userApi.login(msg)).data as commonResponse
-    return response.isOk
+    const response = (await userApi.login(body)).data as getterResponse
+    if (response.isOk)
+      return response.content as {
+        id: number
+      }
+    return undefined
   } catch (err) {
-    return false
+    return undefined
   }
 }
 
 export const register = async (name: string, password: string, email: string): Promise<boolean> => {
-  const msg = {
+  const body = {
     name,
     password,
     email
   }
   try {
-    const response = (await userApi.register(msg)).data as commonResponse
+    const response = (await userApi.register(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
@@ -29,17 +30,17 @@ export const register = async (name: string, password: string, email: string): P
 }
 
 export const updatePassword = async (
-  name: string,
+  id: number,
   oldPassword: string,
   newPassword: string
 ): Promise<boolean> => {
-  const msg = {
+  const body = {
     name,
     oldPassword,
     newPassword
   }
   try {
-    const response = (await userApi.updatePassword(msg)).data as commonResponse
+    const response = (await userApi.updatePassword(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
@@ -47,16 +48,17 @@ export const updatePassword = async (
 }
 
 export const getInfo = async (name: string): Promise<Object | undefined> => {
-  const msg = { name }
+  const body = { name }
   try {
-    const response = (await userApi.getInfo(msg)).data as getterResponse
+    const response = (await userApi.getInfo(body)).data as getterResponse
     if (response.isOk) {
       return response.content as {
         id: number
         name: string
         email: string
+        address: string
         bio: string
-        regTime: Date
+        createDate: Date
         figure: string
       }
     } else return undefined
@@ -65,10 +67,10 @@ export const getInfo = async (name: string): Promise<Object | undefined> => {
   }
 }
 
-export const updateInfo = async (id: number, email: string, bio: string): Promise<boolean> => {
-  const msg = { id, email, bio }
+export const updateInfo = async (id: number, email: string, bio: string, address: string): Promise<boolean> => {
+  const body = { id, email, bio, address }
   try {
-    const response = (await userApi.updateInfo(msg)).data as commonResponse
+    const response = (await userApi.updateInfo(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
@@ -76,9 +78,9 @@ export const updateInfo = async (id: number, email: string, bio: string): Promis
 }
 
 export const updateFigure = async (id: string | Blob, figure: string | Blob): Promise<boolean> => {
-  const msg = { id, figure }
+  const body = { id, figure }
   try {
-    const response = (await userApi.updateFigure(msg)).data as commonResponse
+    const response = (await userApi.updateFigure(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
@@ -94,6 +96,7 @@ export const getGoodsList = async (): Promise<Object | undefined> => {
         merchantId: number
         name: string
         type: string
+        shippingAddress: string
         price: number
         description: string
         figure: string

@@ -50,6 +50,7 @@ export const goodsApi = {
     name: string | Blob
     type: string | Blob
     price: string | Blob
+    shippingAddress: string | Blob
     description: string | Blob
     figure: string | Blob
   }) => {
@@ -58,6 +59,7 @@ export const goodsApi = {
     formData.append('name', data.name)
     formData.append('type', data.type)
     formData.append('price', data.price)
+    formData.append('shippingAdress',data.shippingAddress)
     formData.append('description', data.description)
     formData.append('figure', data.figure)
     return api.post('/goods/addInfo', formData)
@@ -70,7 +72,8 @@ export const orderApi = {
   addInfo: (data: any) => api.post('/order/addInfo', data),
   getBuyerList: (data: any) => api.post('/order/getBuyerList', data),
   getSellerList: (data: any) => api.post('/order/getSellerList', data),
-  updateStage: (data: any) => api.post('/order/updateStage', data)
+  confirmGoods: (data: any) => api.post('/order/confirmGoods', data),
+  sendGoods: (data: any) => api.post('/order/sendGoods', data),
 }
 
 export const requestApi = {

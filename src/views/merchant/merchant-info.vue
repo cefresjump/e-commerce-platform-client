@@ -1,7 +1,16 @@
 <script lang="ts" setup>
 import { Ref, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import merchantApi from '../../lib/merchantApi.ts';
 import { merchantAuthStore } from '../../store/merchantAccount.ts';
+
+const router = useRouter();
+
+onMounted(()=>{
+  if(!merchantAuthStore().isLoggedIn){
+    router.replace('/account/merchantLogin')
+  }
+})
 
 const merchantInfo: Ref<Object> = ref({});
 

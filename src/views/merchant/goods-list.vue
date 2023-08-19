@@ -10,7 +10,7 @@
       <el-main>
         <el-table :data="filterTableData" style="width: 100%">
           <el-table-column label="商品号" prop="goodsId" width="80" />
-          <el-table-column label="创建日期" prop="createDate" />
+          <el-table-column label="创建日期" prop="createDate" width="200"/>
           <el-table-column label="商品图片" prop="figure">
             <template #default="scope">
               <img :src="scope.row.figure" alt="商品图片" style="max-width: 100px; max-height: 100px;" />
@@ -79,7 +79,6 @@ const onAddItem = () => {
 onMounted(async () => {
   const result = await merchantApi.getSellerGoodsList(merchantAuthStore().merchantId);
   if (result) tableData.value = result;
-  console.log(tableData.value)
 })
 </script>
 

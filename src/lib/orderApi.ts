@@ -14,9 +14,9 @@ export const addInfo = async (
   goodsId: number,
   buyCount: number
 ): Promise<boolean> => {
-  const msg = { userId, merchantId, goodsId, buyCount }
+  const body = { userId, merchantId, goodsId, buyCount }
   try {
-    const response = (await orderApi.addInfo(msg)).data as commonResponse
+    const response = (await orderApi.addInfo(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
@@ -25,17 +25,22 @@ export const addInfo = async (
 
 //id指的是userId
 export const getBuyerList = async (id: number): Promise<Object | undefined> => {
-  const msg = { id }
+  const body = { id }
   try {
-    const response = (await orderApi.getBuyerList(msg)).data as getterResponse
+    const response = (await orderApi.getBuyerList(body)).data as getterResponse
     if (response.isOk) {
       return response.content as {
+        id:number
         merchantName: string
         goodsName: string
         goodsFigure: string
-        orderPrice: number
-        orderBuyCount: number
-        orderStage: orderStatus
+        shippingAddress: string
+        address: string
+        expressNumber: number
+        price: number
+        buyCount: number
+        stage: orderStatus
+        createDate: Date
       }[]
     } else return undefined
   } catch (err) {
@@ -45,17 +50,22 @@ export const getBuyerList = async (id: number): Promise<Object | undefined> => {
 
 //id指的是merchantId
 export const getSellerList = async (id: number): Promise<Object | undefined> => {
-  const msg = { id }
+  const body = { id }
   try {
-    const response = (await orderApi.getSellerList(msg)).data as getterResponse
+    const response = (await orderApi.getSellerList(body)).data as getterResponse
     if (response.isOk) {
       return response.content as {
+        id:number
         merchantName: string
         goodsName: string
         goodsFigure: string
-        orderPrice: number
-        orderBuyCount: number
-        orderStage: orderStatus
+        shippingAddress: string
+        address: string
+        expressNumber: number
+        price: number
+        buyCount: number
+        stage: orderStatus
+        createDate: Date
       }[]
     } else return undefined
   } catch (err) {
@@ -63,10 +73,20 @@ export const getSellerList = async (id: number): Promise<Object | undefined> => 
   }
 }
 
-export const updateStage = async (id: number, stage: orderStatus): Promise<boolean> => {
-  const msg = { id, stage }
+export const sendGoods = async (id: number, expressNumber: Number): Promise<boolean> => {
+  const body = { id, expressNumber }
   try {
-    const response = (await orderApi.updateStage(msg)).data as commonResponse
+    const response = (await orderApi.sendGoods(body)).data as commonResponse
+    return response.isOk
+  } catch (err) {
+    return false
+  }
+}
+
+export const confirmGoods = async (id: number): Promise<boolean> => {
+  const body = { id }
+  try {
+    const response = (await orderApi.confirmGoods(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
@@ -77,5 +97,6 @@ export default {
   addInfo,
   getBuyerList,
   getSellerList,
-  updateStage
+  sendGoods,
+  confirmGoods
 }

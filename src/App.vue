@@ -31,7 +31,7 @@ const handleExitAccount = ()=>{
           <div style="color:rgb(51,51,51)">或者</div>
           <cefresMenuItem index="/account/userRegister">注册</cefresMenuItem>
         </div>
-        <cefresMenuItem index="/account/merchantLogin">商家登录</cefresMenuItem>
+        <cefresMenuItem index="/merchant/info">商家平台</cefresMenuItem>
         <div style="flex-grow: 0.2;"></div>
       </cefresMenu>
     </div>
