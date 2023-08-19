@@ -1,14 +1,12 @@
 <template>
   <el-container class="layout-container-demo" style="height: 500px">
     <!-- header容器 -->
-    <el-header
-      style="
+    <el-header style="
         text-align: right;
         font-size: 30px;
         font-family: '微软雅黑', Courier, monospace;
         text-align: center;
-      "
-    >
+      ">
       <div class="toolbar">
         <el-icon style="margin-right: 8px; margin-top: 1px">
           <shop />
@@ -20,41 +18,32 @@
       <!-- 侧边容器 -->
       <el-aside width="200px">
         <el-scrollbar>
-          <h5 class="mb-2" style="font-size: larger">
-            <el-icon> <Avatar /> </el-icon>你的信息
-          </h5>
-          <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
-          >
-            <el-menu-item index="/1">
+          <el-menu default-active="/merchant/info" router class="el-menu-vertical-demo">
+            <el-menu-item index="/merchant/info">
               <template #title>
-                <span
-                  ><el-icon> <Goods /> </el-icon>商品管理</span
-                >
+                <span><el-icon>
+                    <User />
+                  </el-icon>商户信息</span>
               </template>
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="/merchant/goods">
+              <template #title>
+                <span><el-icon>
+                    <Goods />
+                  </el-icon>商品管理</span>
+              </template>
+            </el-menu-item>
+            <el-menu-item index="/merchant/order">
               <el-icon>
                 <DocumentCopy />
               </el-icon>
               <span>订单管理</span>
             </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="/merchant/service">
               <el-icon>
                 <Headset />
               </el-icon>
               <span>售后处理</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <el-icon>
-                <el-icon>
-                  <Postcard />
-                </el-icon>
-              </el-icon>
-              <span>商家信息</span>
             </el-menu-item>
           </el-menu>
         </el-scrollbar>
@@ -78,13 +67,6 @@ import {
   ElHeader,
   ElIcon
 } from 'element-plus'
-
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
 </script>
 
 <style scoped>

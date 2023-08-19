@@ -22,11 +22,11 @@
           <!-- 商品订单信息 -->
           <el-table :data="order_tableData" style="width: 100%" height="250">
             <!-- 表中数据 -->
-            <el-table-column prop="date" label="Date" width="200" />
-            <el-table-column prop="name" label="Name" width="200" />
-            <el-table-column prop="address" label="Address" />
+            <el-table-column prop="date" label="日期" width="200" />
+            <el-table-column prop="name" label="商品名称" width="200" />
+            <el-table-column prop="address" label="收货地址" />
             <!-- 商品状态(-1未送,0在送,1已到) -->
-            <el-table-column prop="flag" label="flag" />
+            <el-table-column prop="flag" label="订单状态" />
           </el-table>
         </el-main>
       </el-container>

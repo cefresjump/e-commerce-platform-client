@@ -15,9 +15,9 @@ enum requestStage {
 }
 
 export const addAfterSale = async (orderId: number, type: requestType): Promise<boolean> => {
-  const msg = { orderId, type }
+  const body = { orderId, type }
   try {
-    const response = (await requestApi.addAfterSale(msg)).data as commonResponse
+    const response = (await requestApi.addAfterSale(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
@@ -26,17 +26,20 @@ export const addAfterSale = async (orderId: number, type: requestType): Promise<
 
 //id指的是用户id
 export const getSellerAfterSaleRequest = async (id: number): Promise<Object | undefined> => {
-  const msg = { id }
+  const body = { id }
   try {
-    const response = (await requestApi.getSellerAfterSaleRequest(msg)).data as getterResponse
+    const response = (await requestApi.getSellerAfterSaleRequest(body)).data as getterResponse
     if (response.isOk) {
       return response.content as {
-        userId: number
+        id: number
         userName: string
         goodsName: string
+        goodsFigure: string
         orderPrice: number
-        requestType: requestType
-        requestStage: requestStage
+        orderDate: Date
+        createDate: Date
+        type: requestType
+        stage: requestStage
       }[]
     } else return undefined
   } catch (err) {
@@ -46,17 +49,20 @@ export const getSellerAfterSaleRequest = async (id: number): Promise<Object | un
 
 //id指的是商家id
 export const getBuyerAfterSaleRequest = async (id: number): Promise<Object | undefined> => {
-  const msg = { id }
+  const body = { id }
   try {
-    const response = (await requestApi.getBuyerAfterSaleRequest(msg)).data as getterResponse
+    const response = (await requestApi.getBuyerAfterSaleRequest(body)).data as getterResponse
     if (response.isOk) {
       return response.content as {
-        userId: number
-        userName: string
+        id: number
+        merchantName: string
         goodsName: string
+        goodsFigure: string
         orderPrice: number
-        requestType: requestType
-        requestStage: requestStage
+        orderDate: Date
+        createDate: Date
+        type: requestType
+        stage: requestStage
       }[]
     } else return undefined
   } catch (err) {
@@ -65,9 +71,9 @@ export const getBuyerAfterSaleRequest = async (id: number): Promise<Object | und
 }
 
 export const updateAfterSaleRequest = async (id: number, stage: requestStage): Promise<boolean> => {
-  const msg = { id, stage }
+  const body = { id, stage }
   try {
-    const response = (await requestApi.updateAfterSaleRequest(msg)).data as commonResponse
+    const response = (await requestApi.updateAfterSaleRequest(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
