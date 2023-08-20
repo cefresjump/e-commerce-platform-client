@@ -24,13 +24,30 @@ export const addInfo = async (
 }
 
 //id指的是userId
-export const getBuyerList = async (id: number): Promise<Object | undefined> => {
+export const getBuyerList = async (
+  id: number
+): Promise<
+  | {
+      id: number
+      merchantName: string
+      goodsName: string
+      goodsFigure: string
+      shippingAddress: string
+      address: string
+      expressNumber: number
+      price: number
+      buyCount: number
+      stage: orderStatus
+      createDate: Date
+    }[]
+  | undefined
+> => {
   const body = { id }
   try {
     const response = (await orderApi.getBuyerList(body)).data as getterResponse
     if (response.isOk) {
       return response.content as {
-        id:number
+        id: number
         merchantName: string
         goodsName: string
         goodsFigure: string
@@ -49,13 +66,30 @@ export const getBuyerList = async (id: number): Promise<Object | undefined> => {
 }
 
 //id指的是merchantId
-export const getSellerList = async (id: number): Promise<Object | undefined> => {
+export const getSellerList = async (
+  id: number
+): Promise<
+  | {
+      id: number
+      merchantName: string
+      goodsName: string
+      goodsFigure: string
+      shippingAddress: string
+      address: string
+      expressNumber: number
+      price: number
+      buyCount: number
+      stage: orderStatus
+      createDate: Date
+    }[]
+  | undefined
+> => {
   const body = { id }
   try {
     const response = (await orderApi.getSellerList(body)).data as getterResponse
     if (response.isOk) {
       return response.content as {
-        id:number
+        id: number
         merchantName: string
         goodsName: string
         goodsFigure: string

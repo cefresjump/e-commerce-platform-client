@@ -1,7 +1,15 @@
 import { commonResponse, getterResponse } from '../interface/responseType.ts'
 import { userApi } from './axiosApi.ts'
 
-export const login = async (name: string, password: string): Promise<Object | undefined> => {
+export const login = async (
+  name: string,
+  password: string
+): Promise<
+  | {
+      id: number
+    }
+  | undefined
+> => {
   const body = { name, password }
   try {
     const response = (await userApi.login(body)).data as getterResponse
@@ -47,7 +55,20 @@ export const updatePassword = async (
   }
 }
 
-export const getInfo = async (name: string): Promise<Object | undefined> => {
+export const getInfo = async (
+  name: string
+): Promise<
+  | {
+      id: number
+      name: string
+      email: string
+      address: string
+      bio: string
+      createDate: Date
+      figure: string
+    }
+  | undefined
+> => {
   const body = { name }
   try {
     const response = (await userApi.getInfo(body)).data as getterResponse
@@ -67,7 +88,12 @@ export const getInfo = async (name: string): Promise<Object | undefined> => {
   }
 }
 
-export const updateInfo = async (id: number, email: string, bio: string, address: string): Promise<boolean> => {
+export const updateInfo = async (
+  id: number,
+  email: string,
+  bio: string,
+  address: string
+): Promise<boolean> => {
   const body = { id, email, bio, address }
   try {
     const response = (await userApi.updateInfo(body)).data as commonResponse
@@ -87,7 +113,20 @@ export const updateFigure = async (id: string | Blob, figure: string | Blob): Pr
   }
 }
 
-export const getGoodsList = async (): Promise<Object | undefined> => {
+export const getGoodsList = async (): Promise<
+  | {
+      goodsId: number
+      merchantId: number
+      name: string
+      type: string
+      shippingAddress: string
+      price: number
+      description: string
+      figure: string
+      createDate: Date
+    }[]
+  | undefined
+> => {
   try {
     const response = (await userApi.getGoodsList()).data as getterResponse
     if (response.isOk) {

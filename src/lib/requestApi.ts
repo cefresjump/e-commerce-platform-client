@@ -25,7 +25,22 @@ export const addAfterSale = async (orderId: number, type: requestType): Promise<
 }
 
 //id指的是用户id
-export const getSellerAfterSaleRequest = async (id: number): Promise<Object | undefined> => {
+export const getSellerAfterSaleRequest = async (
+  id: number
+): Promise<
+  | {
+      id: number
+      userName: string
+      goodsName: string
+      goodsFigure: string
+      orderPrice: number
+      orderDate: Date
+      createDate: Date
+      type: requestType
+      stage: requestStage
+    }[]
+  | undefined
+> => {
   const body = { id }
   try {
     const response = (await requestApi.getSellerAfterSaleRequest(body)).data as getterResponse
@@ -48,7 +63,22 @@ export const getSellerAfterSaleRequest = async (id: number): Promise<Object | un
 }
 
 //id指的是商家id
-export const getBuyerAfterSaleRequest = async (id: number): Promise<Object | undefined> => {
+export const getBuyerAfterSaleRequest = async (
+  id: number
+): Promise<
+  | {
+      id: number
+      merchantName: string
+      goodsName: string
+      goodsFigure: string
+      orderPrice: number
+      orderDate: Date
+      createDate: Date
+      type: requestType
+      stage: requestStage
+    }[]
+  | undefined
+> => {
   const body = { id }
   try {
     const response = (await requestApi.getBuyerAfterSaleRequest(body)).data as getterResponse

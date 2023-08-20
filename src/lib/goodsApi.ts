@@ -1,7 +1,21 @@
 import { commonResponse, getterResponse } from '../interface/responseType.ts'
 import { goodsApi } from './axiosApi.ts'
 
-export const getInfo = async (id: number): Promise<Object | undefined> => {
+export const getInfo = async (
+  id: number
+): Promise<
+  | {
+      goodsId: string
+      merchantId: string
+      name: string
+      type: number
+      price: number
+      description: string
+      figure: string
+      createDate: Date
+    }[]
+  | undefined
+> => {
   const body = { id }
   try {
     const response = (await goodsApi.getInfo(body)).data as getterResponse
@@ -26,11 +40,11 @@ export const updateInfo = async (
   id: number,
   name: string,
   type: string,
-  shippingAddress:string,
+  shippingAddress: string,
   price: number,
   description: string
 ): Promise<boolean> => {
-  const body = { id, name, type,shippingAddress, price, description }
+  const body = { id, name, type, shippingAddress, price, description }
   try {
     const response = (await goodsApi.updateInfo(body)).data as commonResponse
     return response.isOk
@@ -58,7 +72,7 @@ export const addInfo = async (
   description: string | Blob,
   figure: string | Blob
 ): Promise<boolean> => {
-  const body = { merchantId, name, type, price,shippingAddress, description, figure }
+  const body = { merchantId, name, type, price, shippingAddress, description, figure }
   try {
     const response = (await goodsApi.addInfo(body)).data as commonResponse
     return response.isOk
@@ -81,13 +95,26 @@ export const addComment = async (
   }
 }
 
-export const getComments = async (id: number): Promise<Object | undefined> => {
+export const getComments = async (
+  id: number
+): Promise<
+  | {
+      id: number
+      userName: string
+      userFigure: string
+      orderDate: Date
+      createDate: Date
+      content: string
+      score: number
+    }[]
+  | undefined
+> => {
   const body = { id }
   try {
     const response = (await goodsApi.getComments(body)).data as getterResponse
     if (response.isOk) {
       return response.content as {
-        id:number
+        id: number
         userName: string
         userFigure: string
         orderDate: Date

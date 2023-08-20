@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import cefresMenu from './components/cefres-menu.vue';
-import cefresMenuItem from './components/cefres-menu-item.vue';
-import { userAuthStore } from './store/userAccount';
+import cefresMenu from './components/cefres-menu.vue'
+import cefresMenuItem from './components/cefres-menu-item.vue'
+import { userAuthStore } from './store/userAccount'
 
-const handleExitAccount = ()=>{
-  userAuthStore().logout();
+const handleExitAccount = () => {
+  userAuthStore().logout()
 }
-
 </script>
 
 <template>
@@ -16,23 +15,23 @@ const handleExitAccount = ()=>{
   <template v-else>
     <div class="topNav">
       <cefresMenu default-active="/" class="topMenu" mode="horizontal" :ellipsis="false">
-        <div style="flex-grow: 0.2;"></div>
+        <div style="flex-grow: 0.2"></div>
         <cefresMenuItem index="/">首页</cefresMenuItem>
-        <div style="flex-grow:1"></div>
-        <div style="display: flex;" v-if="userAuthStore().isLoggedIn">
-          <div style="padding: 0 10px 0 0;">你好，用户{{ userAuthStore().userName }}</div>
+        <div style="flex-grow: 1"></div>
+        <div style="display: flex" v-if="userAuthStore().isLoggedIn">
+          <div style="padding: 0 10px 0 0">你好，用户{{ userAuthStore().userName }}</div>
           <div class="exitButton" @click="handleExitAccount">登出</div>
           <cefresMenuItem index="/user/info">用户中心</cefresMenuItem>
           <cefresMenuItem index="/user/order">我的订单</cefresMenuItem>
           <cefresMenuItem index="/user/service">售后管理</cefresMenuItem>
         </div>
-        <div style="display: flex;" v-else>
+        <div style="display: flex" v-else>
           <cefresMenuItem index="/account/userLogin">你好，请登录</cefresMenuItem>
-          <div style="color:rgb(51,51,51)">或者</div>
+          <div style="color: rgb(51, 51, 51)">或者</div>
           <cefresMenuItem index="/account/userRegister">注册</cefresMenuItem>
         </div>
         <cefresMenuItem index="/merchant/info">商家平台</cefresMenuItem>
-        <div style="flex-grow: 0.2;"></div>
+        <div style="flex-grow: 0.2"></div>
       </cefresMenu>
     </div>
     <div class="mainContent">

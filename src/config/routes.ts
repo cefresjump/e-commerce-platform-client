@@ -6,7 +6,7 @@ export default [
       { path: 'userLogin', component: () => import('../views/login/user-login.vue') },
       { path: 'userRegister', component: () => import('../views/login/user-register.vue') },
       { path: 'merchantLogin', component: () => import('../views/login/merchant-login.vue') },
-      { path: 'merchantRegister', component: () => import('../views/login/merchant-register.vue') },
+      { path: 'merchantRegister', component: () => import('../views/login/merchant-register.vue') }
     ]
   },
   { path: '/items/:id', component: () => import('../views/shop/item-info.vue') },
