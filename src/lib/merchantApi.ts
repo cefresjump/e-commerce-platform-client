@@ -1,7 +1,15 @@
 import { commonResponse, getterResponse } from '../interface/responseType.ts'
 import { merchantApi } from './axiosApi.ts'
 
-export const login = async (name: string, password: string): Promise<Object | undefined> => {
+export const login = async (
+  name: string,
+  password: string
+): Promise<
+  | {
+      id: number
+    }
+  | undefined
+> => {
   const body = { name, password }
   try {
     const response = (await merchantApi.login(body)).data as getterResponse
@@ -49,7 +57,20 @@ export const updateFigure = async (id: string | Blob, figure: string | Blob): Pr
   }
 }
 
-export const getInfo = async (name: string): Promise<Object | undefined> => {
+export const getInfo = async (
+  name: string
+): Promise<
+  | {
+      id: number
+      name: string
+      email: string
+      address: string
+      bio: string
+      createDate: Date
+      figure: string
+    }
+  | undefined
+> => {
   const body = { name }
   try {
     const response = (await merchantApi.getInfo(body)).data as getterResponse
@@ -79,7 +100,21 @@ export const updateInfo = async (id: number, email: string, bio: string): Promis
   }
 }
 
-export const getSellerGoodsList = async (id: number): Promise<Object | undefined> => {
+export const getSellerGoodsList = async (
+  id: number
+): Promise<
+  | {
+      goodsId: number
+      merchantId: number
+      name: string
+      type: string
+      price: number
+      description: string
+      figure: string
+      createDate: Date
+    }[]
+  | undefined
+> => {
   const body = { id }
   try {
     const response = (await merchantApi.getSellerGoodsList(body)).data as getterResponse

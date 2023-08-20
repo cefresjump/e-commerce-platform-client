@@ -1,19 +1,26 @@
 <template>
-  <el-container class="layout-goods" style="height: 500px"><el-header>
+  <el-container class="layout-goods" style="height: 500px"
+    ><el-header>
       <div class="goodsHead" style="font-size: 30px; font-family: 微软雅黑; text-align: center">
-        <span><el-icon>
-            <message />
-          </el-icon>商品信息</span>
+        <span
+          ><el-icon>
+            <message /> </el-icon
+          >商品信息</span
+        >
       </div>
     </el-header>
     <el-container>
       <el-main>
         <el-table :data="filterTableData" style="width: 100%">
           <el-table-column label="商品号" prop="goodsId" width="80" />
-          <el-table-column label="创建日期" prop="createDate" width="200"/>
+          <el-table-column label="创建日期" prop="createDate" width="200" />
           <el-table-column label="商品图片" prop="figure">
             <template #default="scope">
-              <img :src="scope.row.figure" alt="商品图片" style="max-width: 100px; max-height: 100px;" />
+              <img
+                :src="scope.row.figure"
+                alt="商品图片"
+                style="max-width: 100px; max-height: 100px"
+              />
             </template>
           </el-table-column>
           <el-table-column label="商品名称" prop="name" width="200" />
@@ -44,16 +51,17 @@ import {
   ElTable,
   ElTableColumn,
   ElButton,
-  ElInput,
+  ElInput
 } from 'element-plus'
 const searchText = ref('')
-import merchantApi from '../../lib/merchantApi.ts';
-import { merchantAuthStore } from '../../store/merchantAccount.ts';
+import merchantApi from '../../lib/merchantApi.ts'
+import { merchantAuthStore } from '../../store/merchantAccount.ts'
 
 // 搜索商品
 const filterTableData = computed(() =>
   tableData.value.filter(
-    (goodsInfo) => !searchText.value || goodsInfo.name.toLowerCase().match(searchText.value.toLowerCase())
+    (goodsInfo) =>
+      !searchText.value || goodsInfo.name.toLowerCase().match(searchText.value.toLowerCase())
     // goodsInfo.type.toLowerCase().match(search.value.toLowerCase())
   )
 )
@@ -62,7 +70,7 @@ const handleEdit = (index, row) => {
 }
 
 //表格数据
-const tableData = ref([{}]);
+const tableData = ref([{}])
 
 const onAddItem = () => {
   //  filterTableData.value.push({
@@ -77,8 +85,8 @@ const onAddItem = () => {
 
 //页面被挂载时（也可以说切换到这个页面上时）执行的方法
 onMounted(async () => {
-  const result = await merchantApi.getSellerGoodsList(merchantAuthStore().merchantId);
-  if (result) tableData.value = result;
+  const result = await merchantApi.getSellerGoodsList(merchantAuthStore().merchantId)
+  if (result) tableData.value = result
 })
 </script>
 

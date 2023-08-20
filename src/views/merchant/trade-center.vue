@@ -1,12 +1,14 @@
 <template>
   <el-container class="layout-container-demo" style="height: 500px">
     <!-- header容器 -->
-    <el-header style="
+    <el-header
+      style="
         text-align: right;
         font-size: 30px;
         font-family: '微软雅黑', Courier, monospace;
         text-align: center;
-      ">
+      "
+    >
       <div class="toolbar">
         <el-icon style="margin-right: 8px; margin-top: 1px">
           <shop />
@@ -21,16 +23,20 @@
           <el-menu default-active="/merchant/info" router class="el-menu-vertical-demo">
             <el-menu-item index="/merchant/info">
               <template #title>
-                <span><el-icon>
-                    <User />
-                  </el-icon>商户信息</span>
+                <span
+                  ><el-icon>
+                    <User /> </el-icon
+                  >商户信息</span
+                >
               </template>
             </el-menu-item>
             <el-menu-item index="/merchant/goods">
               <template #title>
-                <span><el-icon>
-                    <Goods />
-                  </el-icon>商品管理</span>
+                <span
+                  ><el-icon>
+                    <Goods /> </el-icon
+                  >商品管理</span
+                >
               </template>
             </el-menu-item>
             <el-menu-item index="/merchant/order">

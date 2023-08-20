@@ -2,10 +2,10 @@
 import userApi from '../../lib/userApi'
 
 const handleClick = async () => {
-  const result = await userApi.login('user1', '12356');
-  const info = await userApi.getInfo("user1");
+  const result = await userApi.login('user1', '12356')
+  const info = await userApi.getInfo('user1')
   console.log(result)
-  console.log(info);
+  console.log(info)
 }
 </script>
 
