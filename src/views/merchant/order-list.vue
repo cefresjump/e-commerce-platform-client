@@ -34,20 +34,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-let whileListedModules = ['vue', 'element-ui']
 import { ref } from 'vue'
-import {
-  ElMain,
-  ElRow,
-  ElCol,
-  ElMenu,
-  ElMenuItem,
-  ElContainer,
-  ElHeader,
-  ElIcon,
-  ElTable,
-  ElTableColumn
-} from 'element-plus'
 // 默认数据
 const item = {
   date: 'xxxx--xx-xx',
