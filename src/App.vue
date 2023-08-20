@@ -1,28 +1,48 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div >
+    <el-container>
+      <el-aside width="151px"><userCenter></userCenter></el-aside>
+      <el-container>
+        <el-main>
+          <!-- <orderList></orderList> -->
+          <!-- <comments></comments> -->
+          <confirm></confirm>
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import userCenter from './components/user-center.vue';
+import orderList from './components/order-list.vue';
+import comments from './components/order-list-to-comment.vue';
+import confirm from './components/order-to-confirm.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    userCenter,orderList,comments,confirm
   }
 }
 </script>
 
 <style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+ .el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+  }
+  
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    line-height: 160px;
+  }
+  
+  body > .el-container {
+    margin-bottom: 40px;
+  }
 </style>
