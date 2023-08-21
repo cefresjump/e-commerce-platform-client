@@ -63,16 +63,6 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ElMain,
-  ElMenu,
-  ElMenuItem,
-  ElContainer,
-  ElScrollbar,
-  ElAside,
-  ElHeader,
-  ElIcon
-} from 'element-plus'
 </script>
 
 <style scoped>
