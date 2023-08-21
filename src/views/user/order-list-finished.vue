@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%" height="250">
+    <el-table  style="width: 100%" height="250">
       <el-table-column prop="createDate" label="订单创建时间" width="250" />
       <el-table-column prop="merchantName" label="商户名称" width="200" />
       <el-table-column prop="goodsFigure" label="商品图片" width="200" />
@@ -13,20 +13,8 @@
   </div>
 </template>
 
-<script setup>
-import { ref,onMounted,computed} from 'vue'
-import orderApi from '../../lib/orderApi.ts'
-import { userAuthStore } from '../../store/userAccount.ts'
-
-//表格数据
-const tableData = ref([{}])
-//页面被挂载时（也可以说切换到这个页面上时）执行的方法
-onMounted(async () => {
-  const result = await orderApi.getBuyerList(userAuthStore().userId)
-  if (result) tableData.value = result
-  console.log(result)
-})
-
+<script lang="ts" setup>
 </script>
 
-<style scoped></style>
+<style >
+</style>
