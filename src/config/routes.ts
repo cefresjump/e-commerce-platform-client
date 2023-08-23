@@ -37,7 +37,17 @@ export default [
     children: [
       { path: 'info', component: () => import('../views/merchant/merchant-info.vue') },
       { path: 'goods', component: () => import('../views/merchant/goods-list.vue') },
-      { path: 'order', component: () => import('../views/merchant/order-list.vue') },
+      { path: 'newGoods', component: () => import('../views/merchant/new-goods.vue') },
+      { path: 'editGoods/:id', component: () => import('../views/merchant/goods-info-edit.vue') },
+      { path: 'orderList', component: () => import('../views/merchant/order-list.vue') },
+      {
+        path: 'sendGoods',
+        component: () => import('../views/merchant/order-wait-sending-goods.vue')
+      },
+      {
+        path: 'serviceHandle',
+        component: () => import('../views/merchant/waiting-after-sale-service-list.vue')
+      },
       {
         path: 'service',
         component: () => import('../views/merchant/after-sale-service-request-list.vue')

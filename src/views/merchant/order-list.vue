@@ -1,62 +1,52 @@
 <template>
   <div class="layout-order">
-    <el-container class="layout-order-list">
-      <el-space :size="20" spacer=" "></el-space>
-      <el-header>
-        <el-menu class="el-menu-demo" mode="horizontal">
-          <el-menu-item index="1"
-            ><el-icon><Box /></el-icon>待发货</el-menu-item
-          >
-
-          <el-menu-item index="2"
-            ><el-icon><Van /></el-icon>配送中</el-menu-item
-          >
-
-          <el-menu-item index="3"
-            ><el-icon><OfficeBuilding /></el-icon>已送达</el-menu-item
-          >
-        </el-menu>
-      </el-header>
-      <el-container>
-        <el-main>
-          <!-- 商品订单信息 -->
-          <el-table :data="order_tableData" style="width: 100%" height="250">
-            <!-- 表中数据 -->
-            <el-table-column prop="date" label="日期" width="200" />
-            <el-table-column prop="name" label="商品名称" width="200" />
-            <el-table-column prop="address" label="收货地址" />
-            <!-- 商品状态(-1未送,0在送,1已到) -->
-            <el-table-column prop="flag" label="订单状态" />
-          </el-table>
-        </el-main>
-      </el-container>
-    </el-container>
+    <div class="layout-order-list">
+      <!-- 商品订单信息 -->
+      <el-table :data="orderTableData" style="width: 100%" height="250">
+        <!-- 表中数据 -->
+        <el-table-column label="创建日期" prop="createDate" width="170">
+          <template #default="scope">
+            {{ formatDate(scope.row.createDate) }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="goodsName" label="商品名称" width="200" />
+        <el-table-column prop="shippingAddress" label="发货地点" />
+        <el-table-column prop="address" label="收货地址" />
+        <el-table-column prop="buyCount" label="数量" width="70" />
+        <el-table-column prop="expressNumber" label="快递号" width="200" />
+        <el-table-column prop="stage" label="订单状态">
+          <template #default="scope">
+            {{ orderStageToString(scope.row.stage) }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
-// 默认数据
-const item = {
-  date: 'xxxx--xx-xx',
-  name: 'null',
-  address: 'null',
-  flag: '0'
-}
-// 初始化
-const order_tableData = ref(Array.from({ length: 20 }).fill(item))
+import { ElTable, ElTableColumn } from 'element-plus'
+import { ref, onMounted } from 'vue'
+import orderApi from '../../lib/orderApi'
+import { merchantAuthStore } from '../../store/merchantAccount'
+import { formatDate } from '../../utils/dateUtils.ts'
+import { orderStageToString } from '../../utils/toString.ts'
 
-// 样式
+// 初始化
+const orderTableData = ref()
+
+onMounted(async () => {
+  const result = await orderApi.getSellerList(merchantAuthStore().merchantId)
+  if (result) {
+    orderTableData.value = result
+  }
+})
 </script>
 
 <style scoped>
-.layout-order-list .el-main {
-  padding: 0;
-}
-.layout-order-list .toolbar {
-  display: inline-flex;
+.layout-order-list {
+  padding: 50px 10px 0 20px;
   align-items: center;
   justify-content: center;
   height: 100%;
-  right: 20px;
 }
 </style>

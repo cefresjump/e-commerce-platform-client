@@ -71,7 +71,7 @@ export const getSellerList = async (
 ): Promise<
   | {
       id: number
-      merchantName: string
+      userName: string
       goodsName: string
       goodsFigure: string
       shippingAddress: string
@@ -90,7 +90,7 @@ export const getSellerList = async (
     if (response.isOk) {
       return response.content as {
         id: number
-        merchantName: string
+        userName: string
         goodsName: string
         goodsFigure: string
         shippingAddress: string

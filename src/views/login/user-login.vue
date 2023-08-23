@@ -1,98 +1,139 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import userApi from '../../lib/userApi'
+import { userAuthStore } from '../../store/userAccount'
 
-const loginForm = ref({ username: '', password: '' });
-const loginFormRules = {
-  username: [
-    { required: true, message: "请输入用户名", trigger: "blur" },
-    { min: 3, max: 12, message: "请输入合法用户名", trigger: "blur" }
-  ],
-  password: [
-    { required: true, message: "密码不能为空", trigger: "blur" },
-    { min: 6, max: 12, message: "请输入6-12位密码", trigger: "blur" }
-  ]
+const router = useRouter()
+const loginForm = ref({ name: '', password: '' })
+const submitMessage = ref('')
+
+const login = async () => {
+  const accountMsg = loginForm.value
+  if (accountMsg.name === '' && accountMsg.password === '') {
+    submitMessage.value = '请输入信息'
+    setTimeout(() => (submitMessage.value = ''), 1000)
+  } else {
+    const result = await userApi.login(accountMsg.name, accountMsg.password)
+    if (result) {
+      userAuthStore().setUser(result.id, accountMsg.name)
+      submitMessage.value = '登录成功，正在跳转。。。'
+      setTimeout(() => router.push('/'), 1000)
+    } else {
+      submitMessage.value = '登录失败'
+      setTimeout(() => (submitMessage.value = ''), 1000)
+    }
+  }
 }
 
-function login() {
-  //登录预验证
-  this.$refs.loginFormRef.validate(async (valid) => {
-    if (!valid)
-      return;
-    //发起登录请求(需要)
-    const { data: res } = await this.$http.post("login", this.loginForm);
-    if (res.meta.status !== 200)
-      return console.log("登录失败");
-    console.log("登录成功");
-  });
-}
-
-function register() {
-
+const jumpUserReg = () => {
+  router.push('/account/userRegister')
 }
 </script>
 
 <template>
   <div class="container">
-    <div class="login-container">
-      <div class="header">登录账号</div>
-      <el-form :model="loginForm" status-icon :rules="loginFormRules" ref="loginFormRef" label-width="100px"
-        class="login-form">
+    <div class="header">
+      <div style="flex-grow: 0.1"></div>
+      <img src="../../assets/icon/icon1.png" style="max-width: 60px; max-height: 60px" />
+      <div>简购坊</div>
+      <div style="flex-grow: 0.7"></div>
+    </div>
+    <div class="content">
+      <img src="../../assets/img/user-login.webp" style="max-height: 500px" />
+      <el-form :model="loginForm" status-icon ref="loginFormRef" class="login-form">
+        <div style="padding: 0 0 20px 0; font-size: 25px">登录</div>
         <!--账号-->
-        <el-form-item label="账号" prop="username">
-          <el-input label="用户名" :rows="8" v-model="loginForm.username" placeholder="请输入账号"></el-input>
+        <el-form-item label="账号" prop="name">
+          <el-input
+            label="用户名"
+            :rows="8"
+            v-model="loginForm.name"
+            placeholder="请输入账号"
+          ></el-input>
         </el-form-item>
         <!--密码-->
         <el-form-item label="密码" prop="password">
-          <el-input size="medium" placeholder="请输入密码" v-model="loginForm.password" show-password></el-input>
-        </el-form-item> 
-        <!--登录注册按钮-->
-        <el-form-item>
-          <el-button type="primary" size="medium" @click="login">登录</el-button>
-          <el-button type="info" @click="register">注册</el-button>
+          <el-input size="medium" placeholder="请输入密码" v-model="loginForm.password"></el-input>
         </el-form-item>
+        <div class="login-button" @click="login">登录</div>
+        <div class="login-message">{{ submitMessage }}</div>
+        <div class="jump-register" @click="jumpUserReg">立即注册</div>
       </el-form>
     </div>
   </div>
 </template>
 
 <style scoped>
-html,
-body {
-  height: 100%;
-  width: 100%;
-}
-
 .container {
-  background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
   width: 100%;
   height: 100%;
-  position: absolute;
-  margin: 0px auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.login-container {
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-  margin: 0px auto;
-}
-
-/* 标题样式 */
 .header {
-  font-size: 38px;
-  font-weight: bold;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  color: rgb(51, 51, 51);
+  font-weight: 300;
   text-align: center;
   line-height: 100px;
+  box-shadow: 0px 1px 7px rgba(30, 30, 30, 0.2);
+}
+
+.content {
+  margin: 20px 0 0 0;
+  padding: 0px 0 0 0;
+  height: 500px;
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
 }
 
 /* 登录表单样式 */
 .login-form {
-  width: 550px;
-  height: 200px;
-  margin: 0px auto;
-  background-color: rgba(157, 208, 221, 0.7);
-  padding: 40px;
-  border-radius: 30px;
+  width: 350px;
+  height: 400px;
+  padding: 100px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0px 1px 7px rgba(30, 30, 30, 0.2);
+}
+
+.login-button {
+  padding: 10px;
+  font-size: 22px;
+  text-align: center;
+  width: 250px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(188, 1, 32);
+  cursor: pointer;
+}
+
+.login-message {
+  padding: 10px;
+  width: 250px;
+  height: 100px;
+  color: red;
+  text-align: left;
+}
+
+.jump-register {
+  width: 250px;
+  height: 100px;
+  text-align: right;
+  cursor: pointer;
+}
+
+.jump-register:hover {
+  text-decoration: underline;
 }
 </style>
