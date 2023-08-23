@@ -34,7 +34,7 @@ import orderList from './order-list.vue';
             </el-menu-item>
           </el-menu>
         </el-aside>
-        <el-main>
+        <el-main >
           <!-- main部分 -->
           <router-view></router-view>
         </el-main>
@@ -43,4 +43,11 @@ import orderList from './order-list.vue';
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.el-menu-item{
+  height: 100px;
+  width: 200px;
+  line-height: 300%;
+}
+
+</style>
