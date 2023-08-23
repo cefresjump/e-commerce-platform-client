@@ -1,7 +1,11 @@
 <template>
   <div>
-    <el-table :data="finishedData" style="width: 100%" height="700">
-      <el-table-column prop="createDate" label="订单创建时间" width="250" />
+    <el-table  :data="finishedData" style="width: 100%" height="700">
+      <el-table-column prop="createDate" label="订单创建时间" width="250" >
+        <template #default="scope">
+          {{ formatDate(scope.row.createDate) }}
+        </template>
+      </el-table-column>
       <el-table-column prop="merchantName" label="商户名称" width="200" />
       <el-table-column prop="goodsFigure" label="商品图片" width="200" >
         <template #default="scope">
@@ -12,8 +16,7 @@
         />
       </template>
       </el-table-column>
-      <el-table-column prop="goodsName" label="商品名" width="200" />
-      <el-table-column prop="shippingAddress" label="收货地址" width="200" />
+      <el-table-column prop="goodsName" label="商品名" width="150" />
       <el-table-column prop="price" label="价格" width="100" />
       <el-table-column prop="buyCount" label="购买数量" width="100" />
       <el-table-column prop="stage" label="订单状态"  >
@@ -29,6 +32,7 @@
 import { ref,onMounted,computed} from 'vue'
 import orderApi from '../../lib/orderApi.ts'
 import { userAuthStore } from '../../store/userAccount.ts'
+import { formatDate } from '../../utils/dateUtils.ts'
 
 let finishedData=ref([{}])
 
