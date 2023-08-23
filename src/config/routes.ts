@@ -28,7 +28,11 @@ export default [
         path: 'orderToComment',
         component: () => import('../views/user/order-list-to-comment.vue')
       },
-      { path: 'service', component: () => import('../views/user/after-sale-service.vue') }
+      { path: 'service', component: () => import('../views/user/after-sale-service.vue') },
+      {
+        path: 'orderFinished',
+        component: () => import('../views/user/order-list-finished.vue')
+      },
     ]
   },
   {
