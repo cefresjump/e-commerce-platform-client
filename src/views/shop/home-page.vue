@@ -53,11 +53,11 @@ const jumpLogin = () => {
 }
 
 onMounted(async () => {
+  const result2 = await userApi.getGoodsList();
+  if (result2) goodsList.value = result2;
   if (userAuthStore().isLoggedIn) {
     const result1 = await userApi.getInfo(userAuthStore().userName);
-    const result2 = await userApi.getGoodsList();
     if (result1) userInfo.value = result1;
-    if (result2) goodsList.value = result2;
   }
 })
 </script>
