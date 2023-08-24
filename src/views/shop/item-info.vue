@@ -10,6 +10,7 @@ import userApi from '../../lib/userApi';
 import goodsApi from '../../lib/goodsApi';
 import orderApi from '../../lib/orderApi';
 import { goodsTypeToString } from '../../utils/toString.ts'
+import tailMessage from '../../assets/text/tailMessage.ts'
 
 
 const route = useRoute();
@@ -44,7 +45,7 @@ const buyGoods = async () => {
 }
 
 const updatePage = async () => {
-  if (!userAuthStore().isLoggedIn) router.push('/account/userLogin');
+  if (!userAuthStore().isLoggedIn) router.replace('/account/userLogin');
   const id = route.params.id;
   const result1 = await goodsApi.getInfo(id);
   const result2 = await goodsApi.getComments(id);
@@ -104,8 +105,34 @@ onMounted(updatePage)
         <goodsInfoPage v-for="goods in recommandList" :goods="goods"></goodsInfoPage>
       </div>
       <div class="comment-area">
-        评论区：
+        <div class="recommand-text">评论区</div>
+        <div style="height: 20px;"></div>
         <commentInfo v-for="commentData in commentList" :comment="commentData"></commentInfo>
+      </div>
+      <div class="tail-area">
+        <div class="divider" style="width: 100%;"></div>
+        <div class="tail-content">
+          <div class="tail-tip">
+            <div class="tip-top">购物指南</div>
+            <div class="tip-item" v-for="msg in tailMessage.buyTip">{{ msg }}</div>
+          </div>
+          <div class="tail-tip">
+            <div class="tip-top">配送方式</div>
+            <div class="tip-item" v-for="msg in tailMessage.expressMethod">{{ msg }}</div>
+          </div>
+          <div class="tail-tip">
+            <div class="tip-top">支付方式</div>
+            <div class="tip-item" v-for="msg in tailMessage.payMethod">{{ msg }}</div>
+          </div>
+          <div class="tail-tip">
+            <div class="tip-top">售后服务</div>
+            <div class="tip-item" v-for="msg in tailMessage.afterSale">{{ msg }}</div>
+          </div>
+          <div class="tail-tip">
+            <div class="tip-top">特色服务</div>
+            <div class="tip-item" v-for="msg in tailMessage.otherService">{{ msg }}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -180,6 +207,10 @@ onMounted(updatePage)
 }
 
 .item-figure-area {
+  text-align: center;
+  align-self: center;
+  min-width: 400px;
+  min-height: 500px;
   max-width: 400px;
   max-height: 500px;
 }
@@ -276,5 +307,53 @@ onMounted(updatePage)
 
 .comment-area {
   width: 700px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.tail-area {
+  min-height: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  background-color: rgb(244, 244, 244);
+}
+
+.tail-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.tail-tip {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tip-top {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgb(102, 102, 102);
+}
+
+.tip-item {
+  padding: 5px 0 0 0;
+  font-size: 13px;
+  color: rgb(102, 102, 125);
+}
+
+.divider {
+  height: 1px;
+  width: 80%;
+  margin: 20px 0 20px 0;
+  border-top: solid 1px;
+  border-color: rgba(48, 54, 67, 0.3);
 }
 </style>
