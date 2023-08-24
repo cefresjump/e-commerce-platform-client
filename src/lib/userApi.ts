@@ -92,21 +92,12 @@ export const updateInfo = async (
   id: number,
   email: string,
   bio: string,
-  address: string
+  address: string,
+  figure: string
 ): Promise<boolean> => {
-  const body = { id, email, bio, address }
+  const body = { id, email, bio, address, figure }
   try {
     const response = (await userApi.updateInfo(body)).data as commonResponse
-    return response.isOk
-  } catch (err) {
-    return false
-  }
-}
-
-export const updateFigure = async (id: string | Blob, figure: string | Blob): Promise<boolean> => {
-  const body = { id, figure }
-  try {
-    const response = (await userApi.updateFigure(body)).data as commonResponse
     return response.isOk
   } catch (err) {
     return false
@@ -153,6 +144,5 @@ export default {
   updatePassword,
   getInfo,
   updateInfo,
-  updateFigure,
   getGoodsList
 }

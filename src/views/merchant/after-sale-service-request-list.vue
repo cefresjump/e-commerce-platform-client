@@ -1,86 +1,60 @@
 <template>
-  <el-container class="layout-orders" style="height: 500px"
-    ><el-header>
-      <div class="ordersHead" style="font-size: 30px; font-family: 微软雅黑; text-align: center">
-        <span
-          ><el-icon><Headset /></el-icon>售后订单处理</span
-        >
-      </div>
-    </el-header>
-    <el-container>
-      <el-main>
-        <el-table :data="filterTableData" style="width: 100%">
-          <el-table-column label="订单ID" prop="orderId" />
-
-          <el-table-column label="用户ID" prop="userId" />
-          <el-table-column label="商品ID" prop="merchantId"> </el-table-column>
-
-          <el-table-column label="订单状态" prop="orderStatus" />
-
-          <el-table-column align="left" fixed="right">
-            <template #header>
-              <el-input v-model="search" size="small" placeholder="输入要搜索的售后id" />
-            </template>
-
-            <template #default="scope">
-              <el-button size="small" @click="handle(scope.$index, scope.row)">处理</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div class="layout-order">
+    <div class="layout-order-list">
+      <!-- 商品订单信息 -->
+      <el-table :data="requestTableData" style="width: 100%" height="250">
+        <!-- 表中数据 -->
+        <el-table-column prop="createDate" label="请求日期" width="170">
+          <template #default="scope">   
+            {{ formatDate(scope.row.createDate) }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="orderDate" label="订单日期" width="170">
+          <template #default="scope">
+            {{ formatDate(scope.row.orderDate) }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="userName" label="用户名称" width="200" />
+        <el-table-column prop="goodsName" label="商品名称" width="200" />
+        <el-table-column prop="orderPrice" label="价格" width="70" />
+        <el-table-column prop="type" label="请求类型" width="100">
+          <template #default="scope">
+            {{ requestTypeToString(scope.row.type) }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="stage" label="阶段" fixed="right">
+          <template #default="scope">
+            {{ requestStageToString(scope.row.stage) }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+  </div>
 </template>
-
 <script setup>
-import { computed, ref } from 'vue'
-import {
-  ElMain,
-  ElContainer,
-  ElHeader,
-  ElIcon,
-  ElTable,
-  ElTableColumn,
-  ElButton,
-  ElInput
-} from 'element-plus'
-const search = ref('')
+import { ElTable, ElTableColumn } from 'element-plus'
+import { ref, onMounted, computed } from 'vue'
+import requestApi from '../../lib/requestApi'
+import { merchantAuthStore } from '../../store/merchantAccount'
+import { formatDate } from '../../utils/dateUtils.ts'
+import { requestTypeToString, requestStageToString } from '../../utils/toString.ts'
 
-// import { goodsInfo } from '../../interface/goodsInfo.ts';
+// 初始化
+const requestTableData = ref([{}])
 
-// 搜索订单
-const filterTableData = computed(() =>
-  tableData.filter(
-    (orderInfo) => !search.value || orderInfo.good.name.match(search.value.toLowerCase())
-    // goodsInfo.type.toLowerCase().match(search.value.toLowerCase())
-  )
-)
-const handle = (index, row) => {
-  console.log(index, row)
-}
-
-//初始数据
-var tableData = [
-  {
-    orderId: 1,
-    userId: 2,
-    merchantId: 3,
-    good: { name: 'null', id: 1, type: 'null', price: 211, description: 'XX', figure: '图片url' },
-    orderStage: 'FINISHED'
+onMounted(async () => {
+  const result = await requestApi.getSellerAfterSaleRequest(merchantAuthStore().merchantId)
+  if (result) {
+    requestTableData.value = result
   }
-]
+})
 </script>
 
 <style scoped>
-.layout-goods .el-header {
-  position: relative;
-  background-color: var(--el-color-primary-light-7);
-  color: var(--el-text-color-primary);
-}
-.layout-goods .el-menu {
-  border-right: none;
-}
-.layout-goods .el-main {
-  padding: 0;
+.layout-order-list {
+  padding: 50px 10px 0 20px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 </style>

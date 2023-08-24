@@ -5,15 +5,15 @@ export const getInfo = async (
   id: number
 ): Promise<
   | {
-      goodsId: string
-      merchantId: string
-      name: string
-      type: number
-      price: number
-      description: string
-      figure: string
-      createDate: Date
-    }[]
+    goodsId: string
+    merchantId: string
+    name: string
+    type: number
+    price: number
+    description: string
+    figure: string
+    createDate: Date
+  }
   | undefined
 > => {
   const body = { id }
@@ -29,7 +29,7 @@ export const getInfo = async (
         description: string
         figure: string
         createDate: Date
-      }[]
+      }
     } else return undefined
   } catch (err) {
     return undefined
@@ -42,9 +42,10 @@ export const updateInfo = async (
   type: string,
   shippingAddress: string,
   price: number,
-  description: string
+  description: string,
+  figure: string
 ): Promise<boolean> => {
-  const body = { id, name, type, shippingAddress, price, description }
+  const body = { id, name, type, shippingAddress, price, description, figure }
   try {
     const response = (await goodsApi.updateInfo(body)).data as commonResponse
     return response.isOk
@@ -53,24 +54,14 @@ export const updateInfo = async (
   }
 }
 
-export const updateFigure = async (id: string | Blob, figure: string | Blob): Promise<boolean> => {
-  const body = { id, figure }
-  try {
-    const response = (await goodsApi.updateFigure(body)).data as commonResponse
-    return response.isOk
-  } catch (err) {
-    return false
-  }
-}
-
 export const addInfo = async (
-  merchantId: string | Blob,
-  name: string | Blob,
-  type: string | Blob,
-  price: string | Blob,
-  shippingAddress: string | Blob,
-  description: string | Blob,
-  figure: string | Blob
+  merchantId: string,
+  name: string,
+  type: string,
+  price: string,
+  shippingAddress: string,
+  description: string,
+  figure: string
 ): Promise<boolean> => {
   const body = { merchantId, name, type, price, shippingAddress, description, figure }
   try {
@@ -99,14 +90,14 @@ export const getComments = async (
   id: number
 ): Promise<
   | {
-      id: number
-      userName: string
-      userFigure: string
-      orderDate: Date
-      createDate: Date
-      content: string
-      score: number
-    }[]
+    id: number
+    userName: string
+    userFigure: string
+    orderDate: Date
+    createDate: Date
+    content: string
+    score: number
+  }[]
   | undefined
 > => {
   const body = { id }
@@ -131,7 +122,6 @@ export const getComments = async (
 export default {
   getInfo,
   updateInfo,
-  updateFigure,
   addInfo,
   addComment,
   getComments

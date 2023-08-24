@@ -4,7 +4,7 @@ export const userAuthStore = defineStore('userAuth', {
   state: () => ({
     isLoggedIn: true,
     userId: 1,
-    userName: 'user1'
+    userName: 'User1'
   }),
   actions: {
     setUser(userId: number, userName: string) {

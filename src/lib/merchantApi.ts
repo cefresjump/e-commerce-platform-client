@@ -47,16 +47,6 @@ export const updatePassword = async (
   }
 }
 
-export const updateFigure = async (id: string | Blob, figure: string | Blob): Promise<boolean> => {
-  const body = { id, figure }
-  try {
-    const response = (await merchantApi.updateFigure(body)).data as commonResponse
-    return response.isOk
-  } catch (err) {
-    return false
-  }
-}
-
 export const getInfo = async (
   name: string
 ): Promise<
@@ -90,8 +80,13 @@ export const getInfo = async (
   }
 }
 
-export const updateInfo = async (id: number, email: string, bio: string): Promise<boolean> => {
-  const body = { id, email, bio }
+export const updateInfo = async (
+  id: number,
+  email: string,
+  bio: string,
+  figure: string
+): Promise<boolean> => {
+  const body = { id, email, bio, figure }
   try {
     const response = (await merchantApi.updateInfo(body)).data as commonResponse
     return response.isOk
@@ -141,6 +136,5 @@ export default {
   updatePassword,
   getInfo,
   updateInfo,
-  updateFigure,
   getSellerGoodsList
 }

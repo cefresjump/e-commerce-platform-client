@@ -24,32 +24,46 @@
             <el-menu-item index="/merchant/info">
               <template #title>
                 <span
-                  ><el-icon>
-                    <User /> </el-icon
-                  >商户信息</span
+                  ><el-icon> <User /> </el-icon>商户信息</span
                 >
               </template>
             </el-menu-item>
             <el-menu-item index="/merchant/goods">
               <template #title>
                 <span
-                  ><el-icon>
-                    <Goods /> </el-icon
-                  >商品管理</span
+                  ><el-icon> <Goods /> </el-icon>商品管理</span
                 >
               </template>
             </el-menu-item>
-            <el-menu-item index="/merchant/order">
+            <el-menu-item index="/merchant/sendGoods">
               <el-icon>
                 <DocumentCopy />
               </el-icon>
-              <span>订单管理</span>
+              <span>发货等待</span>
+            </el-menu-item>
+            <el-menu-item index="/merchant/orderList">
+              <el-icon>
+                <DocumentCopy />
+              </el-icon>
+              <span>订单列表</span>
+            </el-menu-item>
+            <el-menu-item index="/merchant/serviceHandle">
+              <el-icon>
+                <Headset />
+              </el-icon>
+              <span>售后处理</span>
             </el-menu-item>
             <el-menu-item index="/merchant/service">
               <el-icon>
                 <Headset />
               </el-icon>
-              <span>售后处理</span>
+              <span>售后列表</span>
+            </el-menu-item>
+            <el-menu-item @click="logout">
+              <el-icon>
+                <User />
+              </el-icon>
+              <span>登出账号</span>
             </el-menu-item>
           </el-menu>
         </el-scrollbar>
@@ -63,6 +77,16 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
+import { merchantAuthStore } from '../../store/merchantAccount';
+
+const router = useRouter()
+
+const logout = ()=>{
+  merchantAuthStore().logout();
+  router.push('/account/merchantLogin');
+}
+
 </script>
 
 <style scoped>
