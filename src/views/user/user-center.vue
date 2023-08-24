@@ -7,11 +7,29 @@ import orderList from './order-list.vue';
 <template>
   <div>
     <el-container>
-      <el-header>用户中心</el-header>
+      <el-header
+      style="
+        text-align: right;
+        font-size: 30px;
+        font-family: '微软雅黑', Courier, monospace;
+        text-align: center;
+      "
+    >
+      <div class="toolbar">
+        <el-icon style="margin-right: 8px; margin-top: 1px">
+          <shop />
+        </el-icon>
+        <span>用户订单</span>
+      </div>
+    </el-header>
       <el-container>
         <el-aside width="200px">
           <!-- 菜单 -->
-          <el-menu default-active="/user/order" class="el-menu-vertical-demo" router>
+          <el-menu default-active="/user/info" class="el-menu-vertical-demo" router>
+            <el-menu-item index="/user/info">
+              <!-- <el-icon><icon-menu /></el-icon> -->
+              <span>用户信息</span>
+            </el-menu-item>
             <el-menu-item index="/user/order">
               <!-- <el-icon><icon-menu /></el-icon> -->
               <span>订单列表</span>
