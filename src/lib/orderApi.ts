@@ -12,9 +12,10 @@ export const addInfo = async (
   userId: number,
   merchantId: number,
   goodsId: number,
+  address: string,
   buyCount: number
 ): Promise<boolean> => {
-  const body = { userId, merchantId, goodsId, buyCount }
+  const body = { userId, merchantId, goodsId, address, buyCount }
   try {
     const response = (await orderApi.addInfo(body)).data as commonResponse
     return response.isOk
@@ -28,18 +29,18 @@ export const getBuyerList = async (
   id: number
 ): Promise<
   | {
-      id: number
-      merchantName: string
-      goodsName: string
-      goodsFigure: string
-      shippingAddress: string
-      address: string
-      expressNumber: number
-      price: number
-      buyCount: number
-      stage: orderStatus
-      createDate: Date
-    }[]
+    id: number
+    merchantName: string
+    goodsName: string
+    goodsFigure: string
+    shippingAddress: string
+    address: string
+    expressNumber: number
+    price: number
+    buyCount: number
+    stage: orderStatus
+    createDate: Date
+  }[]
   | undefined
 > => {
   const body = { id }
@@ -70,18 +71,18 @@ export const getSellerList = async (
   id: number
 ): Promise<
   | {
-      id: number
-      userName: string
-      goodsName: string
-      goodsFigure: string
-      shippingAddress: string
-      address: string
-      expressNumber: number
-      price: number
-      buyCount: number
-      stage: orderStatus
-      createDate: Date
-    }[]
+    id: number
+    userName: string
+    goodsName: string
+    goodsFigure: string
+    shippingAddress: string
+    address: string
+    expressNumber: number
+    price: number
+    buyCount: number
+    stage: orderStatus
+    createDate: Date
+  }[]
   | undefined
 > => {
   const body = { id }

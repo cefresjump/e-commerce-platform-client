@@ -59,6 +59,12 @@
               </el-icon>
               <span>售后列表</span>
             </el-menu-item>
+            <el-menu-item @click="logout">
+              <el-icon>
+                <User />
+              </el-icon>
+              <span>登出账号</span>
+            </el-menu-item>
           </el-menu>
         </el-scrollbar>
       </el-aside>
@@ -70,7 +76,18 @@
   </el-container>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useRouter } from 'vue-router';
+import { merchantAuthStore } from '../../store/merchantAccount';
+
+const router = useRouter()
+
+const logout = ()=>{
+  merchantAuthStore().logout();
+  router.push('/account/merchantLogin');
+}
+
+</script>
 
 <style scoped>
 .layout-container-demo .el-header {

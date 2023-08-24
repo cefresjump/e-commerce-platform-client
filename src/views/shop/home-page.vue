@@ -1,375 +1,349 @@
-<script setup></script>
+<script setup>
+import { ElCarousel, ElCarouselItem, ElImage } from 'element-plus';
+import goodsInfo from '../../components/small-goods-info.vue'
+import { onMounted, ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { userAuthStore } from '../../store/userAccount.ts';
+import userApi from '../../lib/userApi';
+import tailMessage from '../../assets/text/tailMessage.ts'
+
+const router = useRouter();
+
+const loopImageList = ['/img/loop-image(1).webp', '/img/loop-image(2).webp', '/img/loop-image(3).webp']
+const userInfo = ref({});
+
+const goodsList = ref([{}]);
+
+const recommandList = computed(() => {
+  return goodsList.value.slice(0, 5);
+})
+
+const electronicsList = computed(() => {
+  return goodsList.value.filter((e) => e.type === 'electronics').slice(0, 5);
+})
+
+const clothesList = computed(() => {
+  return goodsList.value.filter((e) => e.type === 'clothes').slice(0, 5);
+})
+
+const furnitureList = computed(() => {
+  return goodsList.value.filter((e) => e.type === 'furniture').slice(0, 5);
+})
+
+const toyList = computed(() => {
+  return goodsList.value.filter((e) => e.type === 'toy').slice(0, 5);
+})
+
+const sportList = computed(() => {
+  return goodsList.value.filter((e) => e.type === 'sport').slice(0, 5);
+})
+
+const toolList = computed(() => {
+  return goodsList.value.filter((e) => e.type === 'tool').slice(0, 5);
+})
+
+const searchText = ref('');
+
+const jumpRegister = () => {
+  router.push('/account/userRegister');
+}
+
+const jumpLogin = () => {
+  router.push('/account/userLogin');
+}
+
+onMounted(async () => {
+  if (userAuthStore().isLoggedIn) {
+    const result1 = await userApi.getInfo(userAuthStore().userName);
+    const result2 = await userApi.getGoodsList();
+    if (result1) userInfo.value = result1;
+    if (result2) goodsList.value = result2;
+  }
+})
+</script>
 
 <template>
-  <div class="outer">
-    <!-- 第一模块 -->
-    <div class="fs">
-      <!-- 左边菜单 -->
-      <div class="left-list">
-        <ul class="menu">
-          <li class="electronics">电子产品</li>
-          <li class="necessity">生活用品</li>
-          <li class="home appliances">家电</li>
-          <li class="clothing">服装</li>
-          <li class="medicine">医药</li>
-          <li class="books">图书</li>
-        </ul>
+  <div class="search-area">
+    <div class="small-flex-grow"></div>
+    <img class="top-icon" src="../../assets/icon/icon1.png">
+    <div class="top-text">简购坊</div>
+    <div class="small-flex-grow"></div>
+    <input v-model="searchText" class="search-input" />
+    <div class="search-button">搜索</div>
+  </div>
+  <div class="content-area">
+    <div class="index-area">
+      <div class="index-list">
+        <div class="index-item">电脑/办公</div>
+        <div class="index-item">男装/女装/童装/内衣装</div>
+        <div class="index-item">家用电器</div>
+        <div class="index-item">母婴/玩具乐器</div>
+        <div class="index-item">男鞋/运动/户外</div>
+        <div class="index-item">安装/维修/清洗/二手</div>
       </div>
-      <!-- 中间照片轮播 -->
-      <div class="center">
-        <!-- 轮播的照片 -->
-        <div class="slider">
-          <button class="prev-btn">&#10094;</button>
-          <img class="slide" src="默认标题__2023-08-21+16_06_45.jpeg" alt="Image 1" />
-          <img class="slide" src="f4debd861b7e472eb850764d02a649c2.jpeg" alt="Image 2" />
-          <img class="slide" src="默认标题__2023-08-21+16_14_42.png" alt="Image 3" />
-          <button class="next-btn">&#10095;</button>
-        </div>
-        <!-- 分页器 -->
-        <div class="pagination"></div>
+      <div class="loop-image-list">
+        <el-carousel indicator-position="outside">
+          <el-carousel-item v-for="image in loopImageList" :key="image">
+            <img class="loop-image" :src="image">
+          </el-carousel-item>
+        </el-carousel>
       </div>
-      <!-- 右边用户登录 -->
-      <div class="right-user">
-        <!-- 头像 -->
-        <img class="avatar" src="" alt="" />
-        <!-- 欢迎 -->
-        <div class="welcome">Hi 欢迎光临</div>
-        <!-- 登录与注册 -->
-        <div class="user">
-          <a href="" class="login">登录</a>
-          <a href="" class="register">注册</a>
+      <div v-if="userAuthStore().isLoggedIn" class="user-info">
+        <el-image class="user-figure" :src="userInfo.figure"></el-image>
+        <div>欢迎！用户{{ userInfo.name }}</div>
+      </div>
+      <div v-else class="user-info">
+        <el-image class="user-figure" src="/img/user.webp"></el-image>
+        <div>欢迎来逛简购坊!</div>
+        <div class="user-login-tip">
+          <div @click="jumpRegister" class="jump-account-text">注册</div>
+          <div @click="jumpLogin" class="jump-account-text">登录</div>
         </div>
       </div>
     </div>
-
-    <!-- 第二模块 -->
-    <div class="comRecommend">
-      <!-- 标题 -->
-      <div class="title">
-        <h3 class="tl">为你推荐</h3>
+    <div class="recommand-area">
+      <div class="big-text">为您推荐</div>
+      <div class="divider"></div>
+      <div class="goods-list">
+        <goodsInfo v-for="goods in recommandList" :goods="goods"></goodsInfo>
       </div>
-      <!-- 样式 -->
-      <div>
-        <ul class="com-rec-list">
-          <!-- 第一行 -->
-          <li class="floor">
-            <ul class="floor1-list">
-              <!-- 第一个 -->
-              <li class="list1">
-                <a href="">
-                  <!-- 图片 -->
-                  <div class="picture">
-                    <img src="" alt="" />
-                  </div>
-                  <!-- 名字 -->
-                  <div class="name"></div>
-                  <!-- 价格 -->
-                  <div class="moneySign">¥</div>
-                  <div class="price"></div>
-                </a>
-              </li>
-              <!-- 第二个 -->
-              <li class="list2">
-                <a href="">
-                  <!-- 图片 -->
-                  <div class="picture">
-                    <img src="" alt="" />
-                  </div>
-                  <!-- 名字 -->
-                  <div class="name"></div>
-                  <!-- 价格 -->
-                  <div class="moneySign">¥</div>
-                  <div class="price"></div>
-                </a>
-              </li>
-              <li class="list3">
-                <a href="">
-                  <!-- 图片 -->
-                  <div class="picture">
-                    <img src="" alt="" />
-                  </div>
-                  <!-- 名字 -->
-                  <div class="name"></div>
-                  <!-- 价格 -->
-                  <div class="moneySign">¥</div>
-                  <div class="price"></div>
-                </a>
-              </li>
-              <li class="list4">
-                <a href="">
-                  <!-- 图片 -->
-                  <div class="picture">
-                    <img src="" alt="" />
-                  </div>
-                  <!-- 名字 -->
-                  <div class="name"></div>
-                  <!-- 价格 -->
-                  <div class="moneySign">¥</div>
-                  <div class="price"></div>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <div class="big-text">电脑/办公</div>
+      <div class="divider"></div>
+      <div class="goods-list">
+        <goodsInfo v-for="goods in electronicsList" :goods="goods"></goodsInfo>
+      </div>
+      <div class="big-text">男装/女装/童装/内衣</div>
+      <div class="divider"></div>
+      <div class="goods-list">
+        <goodsInfo v-for="goods in clothesList" :goods="goods"></goodsInfo>
+      </div>
+      <div class="big-text">家用电器</div>
+      <div class="divider"></div>
+      <div class="goods-list">
+        <goodsInfo v-for="goods in furnitureList" :goods="goods"></goodsInfo>
+      </div>
+      <div class="big-text">母婴/玩具乐器</div>
+      <div class="divider"></div>
+      <div class="goods-list">
+        <goodsInfo v-for="goods in toyList" :goods="goods"></goodsInfo>
+      </div>
+      <div class="big-text">男鞋/运动/户外</div>
+      <div class="divider"></div>
+      <div class="goods-list">
+        <goodsInfo v-for="goods in sportList" :goods="goods"></goodsInfo>
+      </div>
+      <div class="big-text">安装/维修/清洗/二手</div>
+      <div class="divider"></div>
+      <div class="goods-list">
+        <goodsInfo v-for="goods in toolList" :goods="goods"></goodsInfo>
       </div>
     </div>
-
-    <!-- 尾部 -->
-    <div class="footer">
-      <div class="footer-container">
-        <!-- 尾部模块一 -->
-        <div class="footerList">
-          <div class="footerItem">
-            <h4>购物指南</h4>
-            <ul class="footerItemCon">
-              <li>购物流程</li>
-              <li>会员介绍</li>
-              <li>生活旅行/团购</li>
-              <li>常见问题</li>
-              <li>购物指南</li>
-            </ul>
-          </div>
-          <div class="footerItem">
-            <h4>配送方式</h4>
-            <ul class="footerItemCon">
-              <li>上门自提</li>
-              <li>211限时达</li>
-              <li>配送服务查询</li>
-              <li>配送费收取标准</li>
-              <li>海外配送</li>
-            </ul>
-          </div>
-          <div class="footerItem">
-            <h4>支付方式</h4>
-            <ul class="footerItemCon">
-              <li>货到付款</li>
-              <li>在线支付</li>
-              <li>分期付款</li>
-              <li>邮局汇款</li>
-              <li>公司转账</li>
-            </ul>
-          </div>
-          <div class="footerItem">
-            <h4>售后服务</h4>
-            <ul class="footerItemCon">
-              <li>售后政策</li>
-              <li>价格保护</li>
-              <li>退款说明</li>
-              <li>返修/退换货</li>
-              <li>取消订单</li>
-            </ul>
-          </div>
-          <div class="footerItem">
-            <h4>特色服务</h4>
-            <ul class="footerItemCon">
-              <li>夺宝岛</li>
-              <li>DIY装机</li>
-              <li>延保服务</li>
-              <li>尚品汇E卡</li>
-              <li>尚品汇通信</li>
-            </ul>
-          </div>
-        </div>
+  </div>
+  <div class="tail-area">
+    <div class="divider" style="width: 100%;"></div>
+    <div class="tail-content">
+      <div class="tail-tip">
+        <div class="tip-top">购物指南</div>
+        <div class="tip-item" v-for="msg in tailMessage.buyTip">{{ msg }}</div>
+      </div>
+      <div class="tail-tip">
+        <div class="tip-top">配送方式</div>
+        <div class="tip-item" v-for="msg in tailMessage.expressMethod">{{ msg }}</div>
+      </div>
+      <div class="tail-tip">
+        <div class="tip-top">支付方式</div>
+        <div class="tip-item" v-for="msg in tailMessage.payMethod">{{ msg }}</div>
+      </div>
+      <div class="tail-tip">
+        <div class="tip-top">售后服务</div>
+        <div class="tip-item" v-for="msg in tailMessage.afterSale">{{ msg }}</div>
+      </div>
+      <div class="tail-tip">
+        <div class="tip-top">特色服务</div>
+        <div class="tip-item" v-for="msg in tailMessage.otherService">{{ msg }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.outer {
-  .fs {
-    width: 1200px;
-    height: 420px;
+.small-flex-grow {
+  flex-grow: 0.2;
+}
 
-    .left-list {
-      position: absolute;
-      left: 45px;
-      top: 45px;
-      width: 300px;
-      position: absolute;
-      background: #fafafa;
-      z-index: 999;
+.search-area {
+  height: 120px;
+  padding: 10px 0 10px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
-      .menu {
-        line-height: 70px;
-        font-size: 30px;
-        font-weight: 400;
-        overflow: hidden;
-        padding: 0 20px;
-        margin: 0;
-      }
-    }
+.top-icon {
+  max-width: 100px;
+}
 
-    .center {
-      position: absolute;
-      left: 345px;
-      top: 45px;
-      box-sizing: border-box;
-      width: 600px;
-      padding: 5px;
-      float: left;
+.top-text {
+  font-size: 25px;
+  color: rgb(51, 51, 51);
+  font-weight: 300;
+}
 
-      .slider {
-        position: relative;
-        overflow: hidden;
-        max-width: 600px;
-        height: 420px;
+.search-input {
+  border: solid 2px rgb(226, 35, 26);
+  font-size: 20px;
+  height: 35px;
+  width: 400px;
+}
 
-        white-space: nowrap;
-      }
+.search-button {
+  height: 41px;
+  line-height: 39px;
+  width: 70px;
+  text-align: center;
+  color: aliceblue;
+  background-color: rgb(226, 35, 26);
+  cursor: pointer;
+}
 
-      .silde {
-        width: 100%;
-        height: 420px;
-        display: inline-flex;
-        object-fit: cover;
-      }
+.content-area {
+  width: 100%;
+  min-height: 100%;
+  background-color: rgb(244, 244, 244);
+  border-top: solid 1px rgb(186, 186, 186);
+}
 
-      .prev-btn,
-      .next-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 24px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        z-index: 1;
-      }
+.index-area {
+  height: 400px;
+  width: 100%;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 
-      .prev-btn {
-        left: 10px;
-      }
+.index-list {
+  height: 360px;
+  width: 200px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+}
 
-      .next-btn {
-        right: 10px;
-      }
-    }
+.index-item {
+  padding: 0 0 0 10px;
+  width: 190px;
+  height: 60px;
+  line-height: 60px;
+  text-align: left;
+  border-top: solid 1px rgb(200, 200, 200);
+  border-left: solid 4px rgb(226, 35, 26);
+}
 
-    .right-user {
-      position: absolute;
-      left: 945px;
-      top: 47px;
-      float: right;
-      width: 300px;
-      height: 420;
-      background: #fafafa;
+.loop-image-list {
+  width: 450px;
+  height: 360px;
+  margin-right: 20px;
+}
 
-      .avatar {
-        height: 100px;
-        width: 100px;
-      }
+.loop-image {
+  max-width: 450px;
+}
 
-      .welcome {
-        font-size: 20px;
-      }
-    }
-  }
+.user-info {
+  width: 220px;
+  height: 335px;
+  padding: 15px 0 0 0;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+}
 
-  .comRecommend {
-    position: absolute;
-    top: 465px;
-    left: 45px;
-    margin-top: 15px;
-    width: 1200px;
-    height: 350px;
-    margin: 0 auto;
+.user-figure {
+  max-width: 75px;
+  padding: 0 0 10px 0;
+  border-radius: 50%;
+}
 
-    .title {
-      .tl {
-        float: left;
-        font-size: 40px;
-        line-height: 40px;
-        margin: 9px 0;
-        font-weight: 700;
-      }
+.user-login-tip {
+  display: flex;
+  flex-direction: row;
+}
 
-      .com-rec-list {
-        position: absolute;
-        top: 505px;
-        overflow: hidden;
-        padding: 10px;
-        height: 310px;
+.jump-account-text {
+  padding-right: 5px;
+  color: rgb(226, 35, 26);
+  cursor: pointer;
+}
 
-        .ul {
-          height: 300px;
-          padding: 1px;
+.recommand-area {
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
 
-          .li {
-            width: 300px;
-            padding: 1px;
-            overflow: hidden;
-            list-style: none;
-            line-height: 18px;
+.big-text {
+  font-size: 30px;
+  font-weight: 700;
+  color: rgb(51, 51, 51);
+  ;
+}
 
-            .picture {
-              width: 230px;
-              height: 210px;
-              overflow: hidden;
-              text-align: center;
-              margin: 5px auto 18px;
-            }
+.divider {
+  height: 1px;
+  width: 80%;
+  margin: 20px 0 20px 0;
+  border-top: solid 1px;
+  border-color: rgba(48, 54, 67, 0.3);
+}
 
-            .name {
-              height: 50px;
-              line-height: 28px;
-              overflow: hidden;
-              margin: 0 auto;
-              padding-left: 10px;
-            }
+.goods-list {
+  width: 1000px;
+  padding: 10px 20px 30px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+}
 
-            .price {
-              font-size: 20px;
-              color: #e1251b;
-              height: 35px;
-              padding-left: 10px;
-              display: block;
-              line-height: 24px;
-              margin: 10px auto 0;
-            }
-          }
-        }
-      }
-    }
-  }
+.tail-area {
+  min-height: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  background-color: rgb(244, 244, 244);
+}
 
-  .footer {
-    position: absolute;
-    top: 815px;
-    background-color: #eaeaea;
+.tail-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
-    .footer-container {
-      width: 1200px;
-      margin: 0 auto;
-      padding: 0 15px;
+.tail-tip {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-      .footerList {
-        padding: 20px;
-        border-bottom: 1px solid #e4e1e1;
-        border-top: 1px solid #e4e1e1;
-        overflow: hidden;
-        padding-left: 40px;
+.tip-top {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgb(102, 102, 102);
+}
 
-        .footerItem {
-          width: 16.6666667%;
-          float: left;
-
-          h4 {
-            font-size: 14px;
-          }
-
-          .footerItemCon {
-            li {
-              line-height: 18px;
-            }
-          }
-
-          &:last-child img {
-            width: 121px;
-          }
-        }
-      }
-    }
-  }
+.tip-item {
+  padding: 5px 0 0 0;
+  font-size: 13px;
+  color: rgb(102, 102, 125);
 }
 </style>

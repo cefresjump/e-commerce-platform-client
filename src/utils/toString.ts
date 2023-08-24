@@ -31,3 +31,19 @@ export const requestStageToString = (stage: string): string => {
     return '已接受'
   } else return '未知'
 }
+
+export const goodsTypeToString = (type: string): string => {
+  if(type==='clothes'){
+    return '服装'
+  } else if(type==='electronics'){
+    return '电子产品'
+  } else if(type==='furniture'){
+    return '家具'
+  } else if(type==='toy'){
+    return '玩具'
+  } else if(type==='sport'){
+    return '运动'
+  } else if(type==='tool'){
+    return '工具'
+  } return '未知'
+}

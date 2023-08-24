@@ -29,7 +29,7 @@ export const goodsApi = {
   updateInfo: (data: any) => api.post('/goods/updateInfo', data),
   addInfo: (data: any) => api.post('/goods/addInfo', data),
   addComment: (data: any) => api.post('/goods/addComment', data),
-  getComments: (data: any) => api.post('/goods/getGoodsCommentInfo', data)
+  getComments: (data: any) => api.post('/goods/getComments', data)
 }
 
 export const orderApi = {

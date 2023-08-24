@@ -9,7 +9,7 @@ export default [
       { path: 'merchantRegister', component: () => import('../views/login/merchant-register.vue') }
     ]
   },
-  { path: '/items/:id', component: () => import('../views/shop/item-info.vue') },
+  { path: '/item/:id', name: 'item', component: () => import('../views/shop/item-info.vue') },
   {
     path: '/user',
     component: () => import('../views/user/user-center.vue'),
