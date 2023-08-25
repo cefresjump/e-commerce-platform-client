@@ -1,3 +1,4 @@
+//将Date对象转换为需要的字符串格式
 export const formatDate = (dateTime: string | number | Date) => {
   const date = new Date(dateTime)
   const year = date.getFullYear()

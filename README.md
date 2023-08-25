@@ -10,3 +10,4 @@ npm run build-only
 npm run dev
 ```
 
+使用http://localhost:5173进入网站
